@@ -9,7 +9,7 @@ pipeline {
     
     parameters {
         string defaultValue: '', description: 'K', name: 'BRANCHBUILD'
-        string defaultValue: '', description: 'G', name: 'BRANCHTAG'
+        string defaultValue: '', description: 'G', name: 'TAGBUILD'
     }    
     
     stages {       
@@ -19,19 +19,23 @@ pipeline {
                 script {
                 sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                 }
-                    echo "${params.BRANCHBUILD}"
-                    echo "${params.BRANCHTAG}"
+                    echo "${params.BRANCH}"
+                    echo "${params.TAG}"
             }
         }          
 
         stage('Deploy on k8s from nginx-phpfpm') {
               steps {
+                  environment{
+                    BRANCH=${params.BRANCHBUILD}
+                    TAG=${params.TAGBUILD}
+                  }
                 //sh "scp -o StrictHostKeyChecking=no -r yaml/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
                     """cd repos/project_lib_deploy; \
-                   export BRANCH=${params.BRANCHBUILD}; \
-                   export TAG=${params.BRANCHTAG}; \
+                   export BRANCH=${BRANCH}; \
+                   export TAG=${TAG}; \
                    echo $BRANCH; \
                    echo $TAG; \
                    kubectl create namespace ${BRANCH}; \
