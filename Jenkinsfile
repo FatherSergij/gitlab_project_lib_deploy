@@ -18,6 +18,8 @@ pipeline {
                 script {
                 sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                 }
+                    echo BRANCH="${params.BRANCH}"
+                    echo TAG=${params.TAG}
             }
         }          
 
@@ -27,8 +29,8 @@ pipeline {
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
                     """cd repos/project_lib_deploy; \
-                   export BRANCH="${params.BRANCH"}; \
-                   export TAG=${params.TAG}; \
+                   export BRANCH="$params.BRANCH"; \
+                   export TAG=$params.TAG; \
                    echo $BRANCH; \
                    echo $TAG; \
                    kubectl create namespace ${BRANCH}; \
