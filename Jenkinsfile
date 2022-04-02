@@ -1,12 +1,11 @@
 pipeline {
-    options {
-        buildDiscarder(logRotator(numToKeepStr: "5"))
-    }
     agent any
     environment {
         IP_K8S="16.170.42.2"
         AWS_ACCOUNT_ID="728490037630"
         AWS_REGION="eu-north-1"
+        BRANCH=params.systemname.BRANCH
+        TAG=params.systemname.TAG
         //BRANCH="develop" 
     }    
     
@@ -27,11 +26,11 @@ pipeline {
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
                     """cd repos/project_lib_deploy; \
-                   kubectl create namespace ${BRANCH}; \
                    export BRANCH=${BRANCH}; \
-                   export BRANCH=${TAG}; \
+                   export TAG=${TAG}; \
                    echo $BRANCH; \
-                   echo $TAG; \
+                   echo $TAG; \ 
+                   kubectl create namespace ${BRANCH}; \
                    kubectl apply -f issuer.yaml; \
                    envsubst < ingress.yaml | kubectl apply -f -; \
                    kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
