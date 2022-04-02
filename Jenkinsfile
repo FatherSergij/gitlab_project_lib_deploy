@@ -32,7 +32,7 @@ pipeline {
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
                     """cd repos/project_lib_deploy; \
-                   kubectl create namespace ${BRANCH}; \
+                   kubectl create namespace ${params.BRANCHBUILD}; \
                    export BRANCH=${BRANCH}; \
                    kubectl apply -f issuer.yaml; \
                    envsubst < ingress-dev.yaml | kubectl apply -f -; \
