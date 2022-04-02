@@ -8,7 +8,7 @@ pipeline {
     }    
     
     parameters {
-        string defaultValue: '', description: 'K', name: 'BRANCH'
+        string defaultValue: '', description: 'K', name: 'BRANCHDEPLOY'
     }    
     
     stages {       
@@ -18,7 +18,7 @@ pipeline {
                 script {
                 sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                 }
-                    echo "${params.BRANCH}"
+                    echo "${params.BRANCHDEPLOY}"
             }
         }          
 
@@ -28,7 +28,7 @@ pipeline {
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
                     """cd repos/project_lib_deploy; \
-                   export BRANCH="$params.BRANCH"; \
+                   export BRANCH="$params.BRANCHDEPLOY"; \
                    export TAG=$params.TAG; \
                    echo $BRANCH; \
                    echo $TAG; \
