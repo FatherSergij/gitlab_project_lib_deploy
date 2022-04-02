@@ -8,7 +8,7 @@ pipeline {
     }    
     
     parameters {
-        string name: 'BRANCH', defaultValue: ''
+        string defaultValue: '', description: 'K', name: 'BRANCH'
     }    
     
     stages {       
@@ -18,8 +18,7 @@ pipeline {
                 script {
                 sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                 }
-                    echo BRANCH="${params.BRANCH}"
-                    echo TAG=${params.TAG}
+                    echo "${params.BRANCH}"
             }
         }          
 
