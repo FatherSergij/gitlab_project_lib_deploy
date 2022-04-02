@@ -24,16 +24,16 @@ pipeline {
 
         stage('tag') {
             script {
-               sh "aws ecr list-images --region ${AWS_REGION} --repository-name web-app --query "imageIds[?starts_with(imageTag,'${ENVIRONMENT}')].imageTag" --output text"
+               sh "aws ecr list-images --region ${AWS_REGION} --repository-name bigproject --output text"
             }
         }
 
-        stage('Deploy on k8s from nginx-phpfpm') {
-            environment {
-                BRANCH="${params.BRANCHBUILD}"
-                TAG="${params.TAGBUILD}"
-            }            
-              steps {
+        //stage('Deploy on k8s from nginx-phpfpm') {
+        //    environment {
+        //        BRANCH="${params.BRANCHBUILD}"
+        //        TAG="${params.TAGBUILD}"
+        //    }            
+        //      steps {
                 //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
@@ -53,7 +53,7 @@ pipeline {
                    kubectl delete deploy deploy-dev1 -n ${BRANCH}; \
                    envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""'                           
                 }
-            }
-        } 
+        //    }
+        //} 
     }
 }
