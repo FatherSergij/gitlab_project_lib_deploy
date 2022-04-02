@@ -34,8 +34,9 @@ pipeline {
                     """cd repos/project_lib_deploy; \
                    kubectl create namespace ${BRANCH}; \
                    export BRANCH=${BRANCH}; \
+                   export TAG=${TAG}; \
                    kubectl apply -f issuer.yaml; \
-                   envsubst < ingress-dev.yaml | kubectl apply -f -; \
+                   envsubst < ingress.yaml | kubectl apply -f -; \
                    kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
                    kubectl create secret docker-registry regcred \
                            --docker-server=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com \
