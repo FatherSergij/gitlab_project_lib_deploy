@@ -25,7 +25,7 @@ pipeline {
         stage('Choice branch') {
             steps {
                 script {
-                    if ($Branch == 'release') {
+                    if (${Branch} == 'release') {
                         properties([
                           parameters([
                             [$class: 'CascadeChoiceParameter', 
