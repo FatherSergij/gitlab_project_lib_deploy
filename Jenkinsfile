@@ -6,7 +6,8 @@ pipeline {
     environment {
         IP_K8S="16.170.42.2"
         AWS_ACCOUNT_ID="728490037630"
-        AWS_REGION="eu-north-1" 
+        AWS_REGION="eu-north-1"
+        BRANCH="develop" 
     }    
     
     
@@ -20,30 +21,14 @@ pipeline {
             }
         }          
 
-        stage('Deploy App on k8s from nginx-phpfpm') {
-            when { 
-                anyOf {
-                    allOf {
-                        branch 'develop'
-                        changeset "html/service1/*"
-                    }
-                    allOf {
-                        triggeredBy cause: 'UserIdCause'
-                        anyOf {
-                            branch 'release'
-                            branch 'master'
-                        }
-                    }
-                }
-            }     
-            steps {
+        stage('Deploy on k8s from nginx-phpfpm') {
+              steps {
                 //sh "scp -o StrictHostKeyChecking=no -r yaml/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
-                    """cd repos/big_task/yaml; \
+                    """cd repos/project_nginx_phpfpm$/yaml; \
                    kubectl create namespace ${BRANCH}; \
                    export BRANCH=${BRANCH}; \
-                   source tmp_svc1_${BRANCH}; \
                    kubectl apply -f issuer.yaml; \
                    envsubst < ingress-dev.yaml | kubectl apply -f -; \
                    kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
