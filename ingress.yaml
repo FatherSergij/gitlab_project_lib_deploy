@@ -21,11 +21,11 @@ metadata:
 spec:
   tls:
   - hosts:
-      - dev1.fatherfedor.fun
-      - dev2.fatherfedor.fun
+      - ${BRANCH}_nginx.fatherfedor.fun
+      - ${BRANCH}_nginx.fatherfedor.fun
     secretName: ssl-letsencrypt
   rules:
-  - host: dev1.fatherfedor.fun
+  - host: ${BRANCH}_nginx.fatherfedor.fun
     http:
       paths:
       - path: /
@@ -35,7 +35,7 @@ spec:
             name: sv-nginx-phpfpm
             port:
               number: 80
-  - host: dev2.fatherfedor.fun
+  - host: ${BRANCH}_node.fatherfedor.fun
     http:
       paths:
       - path: /
