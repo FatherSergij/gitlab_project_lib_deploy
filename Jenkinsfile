@@ -9,7 +9,7 @@ pipeline {
     
     parameters {
         string defaultValue: '', description: 'K', name: 'BRANCHBUILD'
-        string defaultValue: '', description: 'G', name: 'TAGBUILD'
+       // string defaultValue: '', description: 'G', name: 'TAGBUILD'
     }    
     
     stages {       
@@ -21,66 +21,7 @@ pipeline {
                 }
             }
         }          
-
-        //stage('Setup parameters') {
-        //    steps {
-        //        script {
-        //            properties([
-        //              parameters([
-        //                [$class: 'CascadeChoiceParameter', 
-        //                  choiceType: 'PT_SINGLE_SELECT', 
-        //                  description: 'Select Image',
-        //                  filterLength: 1,
-        //                  filterable: false,
-        //                  name: 'TAGBUILD', 
-        //                  script: [
-        //                    $class: 'GroovyScript', 
-        //                    script: [
-        //                      classpath: [], 
-        //                      sandbox: false, 
-        //                      script: 
-        //                        '''
-        //                        import com.amazonaws.client.builder.AwsClientBuilder;
-        //                        import com.amazonaws.services.ecr.AmazonECR;
-        //                        import com.amazonaws.services.ecr.AbstractAmazonECR;
-        //                        import com.amazonaws.services.ecr.AmazonECRClient;
-        //                        import com.amazonaws.services.ecr.model.ListImagesRequest;
-        //                        import com.amazonaws.services.ecr.model.ListImagesResult;
-        //                        import com.amazonaws.services.ecr.AmazonECRClientBuilder;
-        //                        import com.amazonaws.regions.Region;
-        //                        import com.amazonaws.regions.RegionUtils;
-        //                        import com.amazonaws.regions.Regions;
-        //                        import jenkins.model.*
-//
-        //                        AmazonECR client = AmazonECRClientBuilder.standard().withRegion("${AWS_REGION}").build();
-        //                        ListImagesRequest request = new ListImagesRequest().withRepositoryName("bigproject");
-        //                        res = client.listImages(request);
-//
-//
-        //                        def result = []
-        //                        for (image in res) {
-        //                           result.add(image.getImageIds());
-        //                        }
-//
-        //                        return result[0].imageTag;
-        //                        '''
-        //                    ]
-        //                  ]
-        //                ]
-        //              ])
-        //            ])
-        //        }
-        //    }
-        //}
-                    
-
-        stage('tag') {
-            steps {
-                script {
-                   sh "aws ecr list-images --region ${AWS_REGION} --repository-name bigproject --output text"
-                }
-            }
-        }
+                   
 
         //stage('Deploy on k8s from nginx-phpfpm') {
         //    environment {
