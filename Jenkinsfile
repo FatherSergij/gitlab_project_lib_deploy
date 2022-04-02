@@ -27,8 +27,8 @@ pipeline {
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
                     """cd repos/project_lib_deploy; \
-                   export BRANCH=${BRANCH}; \
-                   export TAG=${TAG}; \
+                   export BRANCH="${params.BRANCH"}; \
+                   export TAG=${params.TAG}; \
                    echo $BRANCH; \
                    echo $TAG; \
                    kubectl create namespace ${BRANCH}; \
