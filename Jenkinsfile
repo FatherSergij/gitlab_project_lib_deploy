@@ -23,8 +23,10 @@ pipeline {
         }          
 
         stage('tag') {
-            script {
-               sh "aws ecr list-images --region ${AWS_REGION} --repository-name bigproject --output text"
+            steps {
+                script {
+                   sh "aws ecr list-images --region ${AWS_REGION} --repository-name bigproject --output text"
+                }
             }
         }
 
