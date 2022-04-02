@@ -32,10 +32,11 @@ pipeline {
               steps {
                     echo "${BRANCH}"
                     echo "${TAG}"
-                sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
+                //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
-                    """cd repos/project_lib_deploy; \
+                    """pwd; \
+                   cd repos/project_lib_deploy; \
                    export BRANCH=${BRANCH}; \
                    export TAG=${params.BRANCHTAG}; \
                    echo $BRANCH; \
