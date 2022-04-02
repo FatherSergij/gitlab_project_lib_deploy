@@ -9,6 +9,7 @@ pipeline {
     
     parameters {
         string defaultValue: '', description: 'K', name: 'BRANCHBUILD'
+        string defaultValue: '', description: 'G', name: 'BRANCHTAG'
     }    
     
     stages {       
@@ -19,6 +20,7 @@ pipeline {
                 sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                 }
                     echo "${params.BRANCHBUILD}"
+                    echo "${params.BRANCHTAG}"
             }
         }          
 
@@ -28,8 +30,8 @@ pipeline {
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
                     """cd repos/project_lib_deploy; \
-                   export BRANCH=$params.BRANCHBUILD; \
-                   export TAG=$params.TAG; \
+                   export BRANCH=${params.BRANCHBUILD}; \
+                   export TAG=${params.BRANCHTAG}; \
                    echo $BRANCH; \
                    echo $TAG; \
                    kubectl create namespace ${BRANCH}; \
