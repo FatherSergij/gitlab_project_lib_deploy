@@ -33,7 +33,7 @@ pipeline {
                 //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
-                    ""cd repos/project_lib_deploy; \
+                   """cd repos/project_lib_deploy; \
                    export BRANCH=${params.BRANCHBUILD}; \
                    export TAG=${params.BRANCHTAG}; \
                    echo $params.BRANCHBUILD; \
