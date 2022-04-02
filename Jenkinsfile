@@ -25,8 +25,8 @@ properties([
             import com.amazonaws.regions.Regions;
             import jenkins.model.*
  
-            AmazonECR client = AmazonECRClientBuilder.standard().withRegion("eu-west-1").build();
-            ListImagesRequest request = new ListImagesRequest().withRepositoryName("artem-services");
+            AmazonECR client = AmazonECRClientBuilder.standard().withRegion("eu-north-1").build();
+            ListImagesRequest request = new ListImagesRequest().withRepositoryName("bigproject");
             res = client.listImages(request);
  
  
