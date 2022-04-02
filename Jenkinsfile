@@ -29,7 +29,7 @@ pipeline {
                    export BRANCH=${BRANCH}; \
                    export TAG=${TAG}; \
                    echo $BRANCH; \
-                   echo $TAG; \ 
+                   echo $TAG; \
                    kubectl create namespace ${BRANCH}; \
                    kubectl apply -f issuer.yaml; \
                    envsubst < ingress.yaml | kubectl apply -f -; \
