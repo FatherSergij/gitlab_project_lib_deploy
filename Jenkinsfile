@@ -23,16 +23,16 @@ pipeline {
         }          
 
         stage('Deploy on k8s from nginx-phpfpm') {
-            //environment {
-           //     BRANCH="${params.BRANCHBUILD}"
-           //     TAG="${params.TAGBUILD}"
-           // }            
+            environment {
+                BRANCH="${params.BRANCHBUILD}"
+                TAG="${params.TAGBUILD}"
+            }            
               steps {
                 //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
                     """cd repos/project_lib_deploy; \
-                   kubectl create namespace ${params.BRANCHBUILD}; \
+                   kubectl create namespace ${BRANCH}; \
                    export BRANCH=${BRANCH}; \
                    kubectl apply -f issuer.yaml; \
                    envsubst < ingress-dev.yaml | kubectl apply -f -; \
