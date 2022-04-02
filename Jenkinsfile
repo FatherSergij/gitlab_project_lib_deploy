@@ -7,10 +7,10 @@ pipeline {
         //BRANCH="develop" 
     }    
     
-    parameters {
-        string defaultValue: '', description: 'K', name: 'BRANCHBUILD'
-       // string defaultValue: '', description: 'G', name: 'TAGBUILD'
-    }    
+    //parameters {
+    //    string defaultValue: '', description: 'K', name: 'BRANCHBUILD'
+    //   // string defaultValue: '', description: 'G', name: 'TAGBUILD'
+    //}    
     
     stages {       
 
