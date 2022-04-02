@@ -34,9 +34,7 @@ pipeline {
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
                    """cd repos/project_lib_deploy; \
-                   export BRANCH=${params.BRANCHBUILD}; \
-                   export TAG=${params.TAGBUILD}; \
-                   echo $BRANCH; \
+                   echo ${params.BRANCHBUILD}; \
                    echo $TAG; \
                    kubectl create namespace ${params.BRANCHBUILD}; \
                    kubectl apply -f issuer.yaml; \
