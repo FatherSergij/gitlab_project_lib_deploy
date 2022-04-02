@@ -19,17 +19,17 @@ pipeline {
                 script {
                 sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                 }
-                    echo "${params.BRANCH}"
-                    echo "${params.TAG}"
+                    echo "${params.BRANCHBUILD}"
+                    echo "${params.TAGBUILD}"
             }
         }          
 
         stage('Deploy on k8s from nginx-phpfpm') {
+            environment {
+                BRANCH="${params.BRANCHBUILD}"
+                TAG="${params.TAGBUILD}"
+            }            
               steps {
-                  environment {
-                    BRANCH="${params.BRANCHBUILD}"
-                    TAG="${params.TAGBUILD}"
-                  }
                 //sh "scp -o StrictHostKeyChecking=no -r yaml/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
