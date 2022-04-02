@@ -27,8 +27,8 @@ pipeline {
         stage('Deploy on k8s from nginx-phpfpm') {
               steps {
                   environment {
-                    BRANCH=${params.BRANCHBUILD}
-                    TAG=${params.TAGBUILD}
+                    BRANCH="${params.BRANCHBUILD}"
+                    TAG="${params.TAGBUILD}"
                   }
                 //sh "scp -o StrictHostKeyChecking=no -r yaml/ ubuntu@${IP_K8S}:~/"
                 script {
