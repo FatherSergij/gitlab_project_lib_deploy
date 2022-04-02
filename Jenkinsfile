@@ -26,7 +26,7 @@ pipeline {
                 //sh "scp -o StrictHostKeyChecking=no -r yaml/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
-                    """cd repos/project_nginx_phpfpm$/yaml; \
+                    """cd repos/project_nginx_phpfpm; \
                    kubectl create namespace ${BRANCH}; \
                    export BRANCH=${BRANCH}; \
                    kubectl apply -f issuer.yaml; \

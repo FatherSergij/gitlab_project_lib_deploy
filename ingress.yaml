@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ssl-dev
+  namespace: ${BRANCH}
+  annotations:
+    kubernetes.io/ingress.class: nginx 
+    kubernetes.io/tls-acme: "true"
+    #certmanager.k8s.io/cluster-issuer: "issuer-letsencrypt"
+    #certmanager.io/cluster-issuer: "issuer-letsencrypt"
+    cert-manager.io/cluster-issuer: "issuer-letsencrypt"
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    #ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+#    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+#    cert-manager.io/acme-challenge-type: http01
+   # acme.cert-manager.io/http01-solver: "true"
+   # cert-manager.io/acme-challenge-type: http01
+   # cert-manager.io/issue-temporary-certificate: "true"
+spec:
+  tls:
+  - hosts:
+      - dev1.fatherfedor.fun
+      - dev2.fatherfedor.fun
+    secretName: ssl-letsencrypt
+  rules:
+  - host: dev1.fatherfedor.fun
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sv-nginx-phpfpm
+            port:
+              number: 80
+  - host: dev2.fatherfedor.fun
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+           name: sv-nginx
+           port:
+              number: 80              
