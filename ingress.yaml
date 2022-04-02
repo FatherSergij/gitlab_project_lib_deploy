@@ -22,7 +22,7 @@ spec:
   tls:
   - hosts:
       - ${BRANCH}_nginx.fatherfedor.fun
-      - ${BRANCH}_nginx.fatherfedor.fun
+      - ${BRANCH}_node.fatherfedor.fun
     secretName: ssl-letsencrypt
   rules:
   - host: ${BRANCH}_nginx.fatherfedor.fun
