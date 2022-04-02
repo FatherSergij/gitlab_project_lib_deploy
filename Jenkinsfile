@@ -26,7 +26,7 @@ pipeline {
 
         stage('Deploy on k8s from nginx-phpfpm') {
               steps {
-                  environment{
+                  environment {
                     BRANCH=${params.BRANCHBUILD}
                     TAG=${params.TAGBUILD}
                   }
@@ -35,7 +35,7 @@ pipeline {
                 sh 'ssh ubuntu@${IP_K8S} \
                     """cd repos/project_lib_deploy; \
                    export BRANCH=${BRANCH}; \
-                   export TAG=${TAG}; \
+                   export TAG=${params.BRANCHTAG}; \
                    echo $BRANCH; \
                    echo $TAG; \
                    kubectl create namespace ${BRANCH}; \
