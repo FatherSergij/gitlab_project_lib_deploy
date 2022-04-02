@@ -14,13 +14,19 @@ pipeline {
     
     stages {       
 
-         stage('Logging into AWS ECR') {
+        stage('Logging into AWS ECR') {
             steps {
                 script {
-                sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+                    sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                 }
             }
         }          
+
+        stage('tag') {
+            script {
+               sh "aws ecr list-images --region ${AWS_REGION} --repository-name web-app --query "imageIds[?starts_with(imageTag,'${ENVIRONMENT}')].imageTag" --output text"
+            }
+        }
 
         stage('Deploy on k8s from nginx-phpfpm') {
             environment {
