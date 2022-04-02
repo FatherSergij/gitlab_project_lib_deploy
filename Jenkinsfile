@@ -24,56 +24,58 @@ pipeline {
 
         stage('Choice branch') {
             steps {
-                if ($Branch == 'release') {
-                    properties([
-                      parameters([
-                        [$class: 'CascadeChoiceParameter', 
-                          choiceType: 'PT_SINGLE_SELECT', 
-                          description: 'Select Image',
-                          filterLength: 1,
-                          filterable: false,
-                          name: 'ImageTag', 
-                          script: [
-                            $class: 'GroovyScript', 
-                            script: [
-                              classpath: [], 
-                              sandbox: false, 
-                              script: 
-                                '''
-                                def command = ['/bin/sh', '-c', '/usr/bin/aws ecr describe-images --region ${AWS_REGION} --repository-name bigproject_release --query "sort_by(imageDetails,& imagePushedAt)[ * ].imageTags[ * ]" --output text']
-                                  def proc = command.execute()
-                                  return proc.text.readLines()
-                                '''
+                script {
+                    if ($Branch == 'release') {
+                        properties([
+                          parameters([
+                            [$class: 'CascadeChoiceParameter', 
+                              choiceType: 'PT_SINGLE_SELECT', 
+                              description: 'Select Image',
+                              filterLength: 1,
+                              filterable: false,
+                              name: 'ImageTag', 
+                              script: [
+                                $class: 'GroovyScript', 
+                                script: [
+                                  classpath: [], 
+                                  sandbox: false, 
+                                  script: 
+                                    '''
+                                    def command = ['/bin/sh', '-c', '/usr/bin/aws ecr describe-images --region ${AWS_REGION} --repository-name bigproject_release --query "sort_by(imageDetails,& imagePushedAt)[ * ].imageTags[ * ]" --output text']
+                                      def proc = command.execute()
+                                      return proc.text.readLines()
+                                    '''
+                                ]
+                              ]
                             ]
-                          ]
-                        ]
-                      ])
-                    ])
-                } else {
-                    properties([
-                      parameters([
-                        [$class: 'CascadeChoiceParameter', 
-                          choiceType: 'PT_SINGLE_SELECT', 
-                          description: 'Select Image',
-                          filterLength: 1,
-                          filterable: false,
-                          name: 'ImageTag', 
-                          script: [
-                            $class: 'GroovyScript', 
-                            script: [
-                              classpath: [], 
-                              sandbox: false, 
-                              script: 
-                                '''
-                                def command = ['/bin/sh', '-c', '/usr/bin/aws ecr describe-images --region ${AWS_REGION} --repository-name bigproject_master --query "sort_by(imageDetails,& imagePushedAt)[ * ].imageTags[ * ]" --output text']
-                                  def proc = command.execute()
-                                  return proc.text.readLines()
-                                '''
+                          ])
+                        ])
+                    } else {
+                        properties([
+                          parameters([
+                            [$class: 'CascadeChoiceParameter', 
+                              choiceType: 'PT_SINGLE_SELECT', 
+                              description: 'Select Image',
+                              filterLength: 1,
+                              filterable: false,
+                              name: 'ImageTag', 
+                              script: [
+                                $class: 'GroovyScript', 
+                                script: [
+                                  classpath: [], 
+                                  sandbox: false, 
+                                  script: 
+                                    '''
+                                    def command = ['/bin/sh', '-c', '/usr/bin/aws ecr describe-images --region ${AWS_REGION} --repository-name bigproject_master --query "sort_by(imageDetails,& imagePushedAt)[ * ].imageTags[ * ]" --output text']
+                                      def proc = command.execute()
+                                      return proc.text.readLines()
+                                    '''
+                                ]
+                              ]
                             ]
-                          ]
-                        ]
-                      ])
-                    ])
+                          ])
+                        ])
+                    }
                 }
             }
         }
