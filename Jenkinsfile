@@ -30,6 +30,8 @@ pipeline {
                 TAG="${params.TAGBUILD}"
             }            
               steps {
+                    echo "${BRANCH}"
+                    echo "${TAG}"
                 //sh "scp -o StrictHostKeyChecking=no -r yaml/ ubuntu@${IP_K8S}:~/"
                 script {
                 sh 'ssh ubuntu@${IP_K8S} \
