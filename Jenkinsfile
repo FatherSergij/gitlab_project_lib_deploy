@@ -8,7 +8,7 @@ pipeline {
     }    
     
     parameters {
-        string(name: 'BRANCH'), string(name: 'TAG')
+        string name: 'BRANCH', defaultValue: ''
     }    
     
     stages {       
