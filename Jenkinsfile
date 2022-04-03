@@ -5,10 +5,11 @@ pipeline {
         AWS_ACCOUNT_ID="728490037630"
         AWS_REGION="eu-north-1"
         BRANCH="${params.Branch}"
-        TAG="${params.ImageTag}"        
+        TAG="${params.ImageTag}" 
+        SERVICE="${params.Service}"       
         BRANCH_DEV="${params.Branch_dev}"
         TAG_DEV="${params.ImageTag_dev}" 
-        SERVICE="${params.Service}"        
+        SERVICE_DEV="${params.Service_dev}"        
         //BRANCH2="develop" 
     }    
     
@@ -38,7 +39,7 @@ pipeline {
                         """cd repos/project_lib_deploy; \
                         export BRANCH=${BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
-                        export SERVICE=${SERVICE}; \
+                        export SERVICE=${SERVICE_DEV}; \
                         kubectl create namespace ${BRANCH_DEV}; \
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
@@ -54,8 +55,8 @@ pipeline {
                     } else {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
-                        export BRANCH=${BRANCH_DEV}; \
-                        export TAG=${TAG_DEV}; \
+                        export BRANCH=${BRANCH}; \
+                        export TAG=${TAG}; \
                         export SERVICE=${SERVICE}; \
                         kubectl create namespace ${BRANCH}; \
                         kubectl apply -f issuer.yaml; \
