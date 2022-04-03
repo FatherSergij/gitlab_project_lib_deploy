@@ -28,6 +28,7 @@ pipeline {
 
 
         stage('Deploy on k8s from nginx-phpfpm') {
+
             steps {
           //sh scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                 script {
@@ -35,19 +36,19 @@ pipeline {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         echo $BRANCH_DEV; \
-                        kubectl create namespace $BRANCH_DEV; \
-                        export BRANCH_DEV=${BRANCH_DEV}; \
-                        export TAG_DEV=${TAG_DEV}; \
+                        export BRANCH=${BRANCH_DEV}; \
+                        export TAG=${TAG_DEV}; \
+                        kubectl create namespace $BRANCH; \                        
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
-                        kubectl delete -n ${BRANCH_DEV} secret regcred --ignore-not-found; \
+                        kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
                         kubectl create secret docker-registry regcred \
                                 --docker-server=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com \
                                 --docker-username=AWS \
                                 --docker-password=$(aws ecr get-login-password --region ${AWS_REGION}) \
-                                --namespace=${BRANCH_DEV}; \
+                                --namespace=${BRANCH}; \
                         envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
-                        kubectl delete deploy deploy-dev1 -n ${BRANCH_DEV}; \
+                        kubectl delete deploy deploy-dev1 -n ${BRANCH}; \
                         envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""'                                
                     }
                 }                                                    
