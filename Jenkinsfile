@@ -55,7 +55,7 @@ pipeline {
                         """cd repos/project_lib_deploy; \
                         export BRANCH=${BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
-                        export TAG=${SERVICE}; \
+                        export SERVICE=${SERVICE}; \
                         kubectl create namespace ${BRANCH}; \
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
