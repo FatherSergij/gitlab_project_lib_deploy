@@ -38,12 +38,13 @@ pipeline {
                             echo "${BRANCH}"
                         }                         
                         echo "${BRANCH}"
+                        sh 'ssh ubuntu@${IP_K8S} export BRANCH=${BRANCH};'
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         echo ${BRANCH}; \
                         kubectl create namespace """${BRANCH}"""; \
-                        export BRANCH=${BRANCH}; \
-                        export TAG=${TAG}; \
+                        export BRANCH1=${BRANCH}; \
+                        export TAG1=${TAG}; \
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
                         kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
