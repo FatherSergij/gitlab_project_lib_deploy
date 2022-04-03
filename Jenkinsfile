@@ -31,9 +31,11 @@ pipeline {
                 steps {
           //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                     script {
+                        echo "${params.Branch_dev}"
                         if (params.Branch_dev == 'develop') {
                             BRANCH="${params.Branch_dep}"
                             TAG="${params.ImageTag_dep}"
+                            echo "${BRANCH}"
                         }                         
                         echo "${BRANCH}"
                         sh 'ssh ubuntu@${IP_K8S} \
