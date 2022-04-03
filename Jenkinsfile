@@ -33,7 +33,8 @@ pipeline {
                         if (params.Branch_dev == 'develop') {
                             def newBranch="${params.Branch_dev}"
                             withEnv(['BRANCH1=' + newBranch]) {
-                                sh 'ssh ubuntu@${IP_K8S} export BRANCH1=${BRANCH1}'
+                                sh "echo $BRANCH1"
+                                sh 'ssh ubuntu@${IP_K8S} export BRANCH1=$BRANCH1}'
                             }
                             TAG="${params.ImageTag_dev}"
                             echo "$BRANCH1"
