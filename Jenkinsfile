@@ -37,7 +37,7 @@ pipeline {
                         """cd repos/project_lib_deploy; \
                         export BRANCH=${BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
-                        kubectl create namespace develop; \
+                        kubectl create namespace ${BRANCH_DEV}; \
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
                         kubectl delete -n develop secret regcred --ignore-not-found; \
@@ -49,6 +49,23 @@ pipeline {
                         envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
                         kubectl delete deploy deploy-nginx-phpfpm -n develop; \
                         envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""'                                
+                    } else {
+                        sh 'ssh ubuntu@${IP_K8S} \
+                        """cd repos/project_lib_deploy; \
+                        export BRANCH=${BRANCH_DEV}; \
+                        export TAG=${TAG_DEV}; \
+                        kubectl create namespace ${BRANCH_DEV}; \
+                        kubectl apply -f issuer.yaml; \
+                        envsubst < ingress.yaml | kubectl apply -f -; \
+                        kubectl delete -n develop secret regcred --ignore-not-found; \
+                        kubectl create secret docker-registry regcred \
+                                --docker-server=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com \
+                                --docker-username=AWS \
+                                --docker-password=$(aws ecr get-login-password --region ${AWS_REGION}) \
+                                --namespace=develop; \
+                        envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
+                        kubectl delete deploy deploy-nginx-phpfpm -n develop; \
+                        envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""' 
                     }
                 }                                                    
             }
