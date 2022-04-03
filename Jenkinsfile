@@ -4,7 +4,7 @@ pipeline {
         IP_K8S="16.170.42.2"
         AWS_ACCOUNT_ID="728490037630"
         AWS_REGION="eu-north-1"
-        //BRANCH="${params.Branch}"
+        BRANCH1="${params.Branch}"
         //TAG="${params.ImageTag}"        
         //BRANCH2="develop" 
     }    
@@ -31,7 +31,10 @@ pipeline {
                     script {
                         echo "${BRANCH}"
                         if (params.Branch_dev == 'develop') {
-                            def BRANCH1="${params.Branch_dev}"
+                            def newBranch="${params.Branch_dev}"
+                            withEnv(['BRANCH1=' + newBranch]) {
+                                sh 'ssh ubuntu@${IP_K8S} export BRANCH1=${BRANCH}'
+                            }
                             TAG="${params.ImageTag_dev}"
                             echo "${BRANCH1}"
                         }                         
@@ -40,8 +43,8 @@ pipeline {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         echo ${BRANCH1}; \
-                        kubectl create namespace ${BRANCH1}; \
-                        export BRANCH1=${BRANCH}; \
+                        kubectl create namespace $BRANCH1; \
+                        export BRANCH2=${BRANCH}; \
                         export TAG1=${TAG}; \
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
