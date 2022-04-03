@@ -4,9 +4,9 @@ pipeline {
         IP_K8S="16.170.42.2"
         AWS_ACCOUNT_ID="728490037630"
         AWS_REGION="eu-north-1"
-        BRANCH="${params.Branch}"
+        BRANCH="${params.BranchRun}"
         TAG="${params.ImageTag}" 
-        SERVICE="${params.Service}"       
+        SERVICE="${params.ServiceRun}"       
         BRANCH_DEV="${params.BranchRun_dev}"
         TAG_DEV="${params.ImageTag_dev}" 
         SERVICE_DEV="${params.ServiceRun_dev}"        
@@ -34,12 +34,6 @@ pipeline {
             steps {
           //sh scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                 script {
-                    //echo "${params.Branch_dev}"
-                    //echo "${params.ImageTag_dev}"
-                    //echo "${params.Service_dev}"
-                    //echo "${BRANCH_DEV}"
-                    //echo "${TAG_DEV}"
-                    //echo "${SERVICE_DEV}"
                     if ("${BRANCH_DEV}" == 'develop') {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
