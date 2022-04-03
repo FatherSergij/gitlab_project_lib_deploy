@@ -41,8 +41,8 @@ pipeline {
                     echo "${TAG_DEV}"
                     echo "${SERVICE_DEV}"
                     if (params.Branch_dev == 'develop') {
-                        sh 'ssh ubuntu@${IP_K8S} \
-                        """cd repos/project_lib_deploy; \
+                        ssh ubuntu@${IP_K8S} \
+                        "cd repos/project_lib_deploy; \
                         export BRANCH=${BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
                         export SERVICE=${SERVICE_DEV}; \
@@ -57,7 +57,7 @@ pipeline {
                                 --namespace=${BRANCH_DEV}; \
                         envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
                         kubectl delete deploy deploy-nginx-phpfpm -n ${BRANCH_DEV}; \
-                        envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""'                                
+                        envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"                                
                     } else {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
