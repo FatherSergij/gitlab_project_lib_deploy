@@ -32,15 +32,15 @@ pipeline {
           //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                     script {
                         echo "${params.Branch_dev}"
-                        if (params.Branch_dep == 'develop') {
-                            BRANCH="${params.Branch_dep}"
-                            TAG="${params.ImageTag_dep}"
+                        if (params.Branch_dev == 'develop') {
+                            BRANCH="${params.Branch_dev}"
+                            TAG="${params.ImageTag_dev}"
                             echo "${BRANCH}"
                         }                         
                         echo "${BRANCH}"
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
-                        kubectl create namespace ${BRANCH}; \
+                        kubectl create namespace """${BRANCH}"""; \
                         export BRANCH=${BRANCH}; \
                         export TAG=${TAG}; \
                         kubectl apply -f issuer.yaml; \
