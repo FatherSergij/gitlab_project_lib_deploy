@@ -4,7 +4,7 @@ pipeline {
         IP_K8S="16.170.42.2"
         AWS_ACCOUNT_ID="728490037630"
         AWS_REGION="eu-north-1"
-        //BRANCH="develop" 
+        BRANCH2="develop" 
     }    
     
     //parameters {
@@ -38,11 +38,11 @@ pipeline {
                             echo "${BRANCH}"
                         }                         
                         echo "${BRANCH}"
-                        sh 'ssh ubuntu@${IP_K8S} export BRANCH=${BRANCH};'
+                        sh 'ssh ubuntu@${IP_K8S} export BRANCH="""${BRANCH}"""'
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         echo ${BRANCH}; \
-                        kubectl create namespace """${BRANCH}"""; \
+                        kubectl create namespace ${BRANCH2}; \
                         export BRANCH1=${BRANCH}; \
                         export TAG1=${TAG}; \
                         kubectl apply -f issuer.yaml; \
