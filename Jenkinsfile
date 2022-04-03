@@ -37,9 +37,7 @@ pipeline {
                         """cd repos/project_lib_deploy; \
                         export BRANCH=${BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
-                        kubectl create namespace $BRANCH; \
-                        kubectl apply -f issuer.yaml; \
-                        envsubst < .depl.sh;"""'                                
+                        envsubst < depl.sh | sh -;"""'                                
                     }
                 }                                                    
             }
