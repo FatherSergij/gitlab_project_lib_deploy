@@ -32,7 +32,7 @@ pipeline {
           //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                     script {
                         echo "${params.Branch_dev}"
-                        if (params.Branch_dev == 'develop') {
+                        if (params.Branch_dep == 'develop') {
                             BRANCH="${params.Branch_dep}"
                             TAG="${params.ImageTag_dep}"
                             echo "${BRANCH}"
