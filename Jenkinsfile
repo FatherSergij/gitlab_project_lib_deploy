@@ -38,7 +38,7 @@ pipeline {
                         echo $BRANCH_DEV; \
                         export BRANCH=${BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
-                        kubectl create namespace $BRANCH; \
+                        kubectl create namespace ${BRANCH}; \
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
                         kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
@@ -48,7 +48,7 @@ pipeline {
                                 --docker-password=$(aws ecr get-login-password --region ${AWS_REGION}) \
                                 --namespace=${BRANCH}; \
                         envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
-                        kubectl delete deploy deploy-dev1 -n ${BRANCH}; \
+                        kubectl delete deploy deploy-nginx-phpfpm -n ${BRANCH}; \
                         envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""'                                
                     }
                 }                                                    
