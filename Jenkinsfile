@@ -32,7 +32,7 @@ pipeline {
                         if (params.Branch_dev == 'develop') {
                             def newBranch="${params.Branch_dev}"
                             withEnv(["BRANCH=${params.Branch_dev}", "TAG=${params.ImageTag_dev}"]) {
-                                sh 'echo $BRANCH'
+                                sh "echo $BRANCH"
 
                             }
                         }                         
