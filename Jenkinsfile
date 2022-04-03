@@ -7,7 +7,7 @@ pipeline {
         BRANCH="${params.Branch}"
         TAG="${params.ImageTag}" 
         SERVICE="${params.Service}"       
-        BRANCH_DEV="develop"//"${params.Branch_dev}"
+        BRANCH_DEV="${params.Branch_dev}"
         TAG_DEV="${params.ImageTag_dev}" 
         SERVICE_DEV="${params.Service_dev}"        
         //BRANCH2="develop" 
@@ -34,13 +34,13 @@ pipeline {
             steps {
           //sh scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                 script {
-                    echo "${params.Branch_dev}"
-                    echo "${params.ImageTag_dev}"
-                    echo "${params.Service_dev}"
-                    echo "${BRANCH_DEV}"
-                    echo "${TAG_DEV}"
-                    echo "${SERVICE_DEV}"
-                    if (params.Branch_dev == 'develop') {
+                    //echo "${params.Branch_dev}"
+                    //echo "${params.ImageTag_dev}"
+                    //echo "${params.Service_dev}"
+                    //echo "${BRANCH_DEV}"
+                    //echo "${TAG_DEV}"
+                    //echo "${SERVICE_DEV}"
+                    if (${BRANCH_DEV} == 'develop') {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         export BRANCH=${BRANCH_DEV}; \
