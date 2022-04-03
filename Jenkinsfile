@@ -4,7 +4,7 @@ pipeline {
         IP_K8S="16.170.42.2"
         AWS_ACCOUNT_ID="728490037630"
         AWS_REGION="eu-north-1"
-        BRANCH1="${params.Branch}"
+        //BRANCH="${params.Branch}"
         //TAG="${params.ImageTag}"        
         //BRANCH2="develop" 
     }    
@@ -29,17 +29,13 @@ pipeline {
                 steps {
           //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                     script {
-                        echo "${BRANCH}"
                         if (params.Branch_dev == 'develop') {
                             def newBranch="${params.Branch_dev}"
-                            withEnv(['BRANCH1=' + newBranch]) {
-                                sh "echo $BRANCH1"
-                                sh 'ssh ubuntu@${IP_K8S} export BRANCH2=$BRANCH1}'
+                            withEnv(["BRANCH=${params.Branch_dev}", "TAG=${params.ImageTag_dev}"]) {
+                                sh 'echo $BRANCH'
+
                             }
-                            TAG="${params.ImageTag_dev}"
-                            echo "$BRANCH1"
                         }                         
-                        echo "${BRANCH}"
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         echo $BRANCH2; \
