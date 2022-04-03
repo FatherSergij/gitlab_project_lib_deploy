@@ -40,6 +40,7 @@ pipeline {
                         echo "${BRANCH}"
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
+                        echo ${BRANCH}; \
                         kubectl create namespace """${BRANCH}"""; \
                         export BRANCH=${BRANCH}; \
                         export TAG=${TAG}; \
