@@ -7,7 +7,7 @@ pipeline {
         BRANCH="${params.Branch}"
         TAG="${params.ImageTag}" 
         SERVICE="${params.Service}"       
-        BRANCH_DEV="${params.Branch_dev}"
+        BRANCH_DEV="develop"//"${params.Branch_dev}"
         TAG_DEV="${params.ImageTag_dev}" 
         SERVICE_DEV="${params.Service_dev}"        
         //BRANCH2="develop" 
