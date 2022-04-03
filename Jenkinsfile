@@ -26,9 +26,6 @@ pipeline {
 
 
         stage('Deploy on k8s from nginx-phpfpm') {
-            environment {
-
-            }            
                 steps {
           //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                     script {
