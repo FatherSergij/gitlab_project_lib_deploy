@@ -4,8 +4,8 @@ pipeline {
         IP_K8S="16.170.42.2"
         AWS_ACCOUNT_ID="728490037630"
         AWS_REGION="eu-north-1"
-        //BRANCH="${params.Branch}"
-        //TAG="${params.ImageTag}"        
+        BRANCH="${params.Branch}"
+        TAG="${params.ImageTag}"        
         //BRANCH2="develop" 
     }    
     
@@ -32,27 +32,25 @@ pipeline {
                         if (params.Branch_dev == 'develop') {
                             def newBranch="${params.Branch_dev}"
                             withEnv(["BRANCH=${params.Branch_dev}", "TAG=${params.ImageTag_dev}"]) {
-                                sh "echo $BRANCH"
-
+                                sh 'ssh ubuntu@${IP_K8S} \
+                                """cd repos/project_lib_deploy; \
+                                echo $BRANCH; \
+                                kubectl create namespace $BRANCH; \
+                                export BRANCH=${BRANCH}; \
+                                export TAG=${TAG}; \
+                                kubectl apply -f issuer.yaml; \
+                                envsubst < ingress.yaml | kubectl apply -f -; \
+                                kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
+                                kubectl create secret docker-registry regcred \
+                                        --docker-server=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com \
+                                        --docker-username=AWS \
+                                        --docker-password=$(aws ecr get-login-password --region ${AWS_REGION}) \
+                                        --namespace=${BRANCH}; \
+                                envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
+                                kubectl delete deploy deploy-dev1 -n ${BRANCH}; \
+                                envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""'                                
                             }
-                        }                         
-                        sh 'ssh ubuntu@${IP_K8S} \
-                        """cd repos/project_lib_deploy; \
-                        echo $BRANCH2; \
-                        kubectl create namespace $BRANCH2; \
-                        export BRANCH2=${BRANCH}; \
-                        export TAG1=${TAG}; \
-                        kubectl apply -f issuer.yaml; \
-                        envsubst < ingress.yaml | kubectl apply -f -; \
-                        kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
-                        kubectl create secret docker-registry regcred \
-                                --docker-server=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com \
-                                --docker-username=AWS \
-                                --docker-password=$(aws ecr get-login-password --region ${AWS_REGION}) \
-                                --namespace=${BRANCH}; \
-                        envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
-                        kubectl delete deploy deploy-dev1 -n ${BRANCH}; \
-                        envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""'                           
+                        }                                                    
                     }
             }
         } 
