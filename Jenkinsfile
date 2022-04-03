@@ -40,7 +40,7 @@ pipeline {
                     //echo "${BRANCH_DEV}"
                     //echo "${TAG_DEV}"
                     //echo "${SERVICE_DEV}"
-                    if (${BRANCH_DEV} == 'develop') {
+                    if ("${BRANCH_DEV}" == 'develop') {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         export BRANCH=${BRANCH_DEV}; \
