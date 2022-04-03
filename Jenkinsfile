@@ -44,7 +44,7 @@ pipeline {
                         echo """$BRANCH"""; \
                         kubectl create namespace $BRANCH; \
                         kubectl apply -f issuer.yaml; \
-                        envsubst < ingress.yaml | kubectl apply -f -; \
+                        envsubst < .depl.sh; \
                         kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
                         kubectl create secret docker-registry regcred \
                                 --docker-server=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com \
