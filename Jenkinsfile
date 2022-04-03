@@ -49,7 +49,7 @@ pipeline {
                         export BRANCH=$(echo ${BRANCH_DEV}); \
                         export BRANCH=${BRANCH_DEV}; \
                         export BRANCH=${env.BRANCH_DEV}; \
-                        export BRANCH=env.BRANCH_DEV; \
+                        export BRANCH=\$env.BRANCH_DEV; \
                         export TAG=${TAG_DEV}; \
                         export SERVICE=${SERVICE_DEV}; \
                         kubectl create namespace ${BRANCH_DEV}; \
