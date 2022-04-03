@@ -43,13 +43,7 @@ pipeline {
                     if (params.Branch_dev == 'develop') {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
-                        echo "${BRANCH_DEV}"; \
-                        echo "${TAG_DEV}"; \
-                        echo "${SERVICE_DEV}"; \
                         export BRANCH=${BRANCH_DEV}; \
-                        echo $env.BRANCH_DEV; \
-                        echo env.BRANCH_DEV; \
-                        echo ${env.BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
                         export SERVICE=${SERVICE_DEV}; \
                         kubectl create namespace ${BRANCH_DEV}; \
