@@ -35,7 +35,7 @@ pipeline {
                             BRANCH="${params.Branch_dep}"
                             TAG="${params.ImageTag_dep}"
                         }                         
-                        echo ${BRANCH}
+                        echo "${BRANCH}"
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         kubectl create namespace ${BRANCH}; \
