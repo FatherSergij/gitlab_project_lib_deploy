@@ -8,7 +8,7 @@ pipeline {
         TAG="${params.ImageTag}"        
         BRANCH_DEV="${params.Branch_dev}"
         TAG_DEV="${params.ImageTag_dev}" 
-        SERVICE="${params.svc}"        
+        SERVICE="${params.Service}"        
         //BRANCH2="develop" 
     }    
     
@@ -38,6 +38,7 @@ pipeline {
                         """cd repos/project_lib_deploy; \
                         export BRANCH=${BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
+                        export SERVICE=${SERVICE}; \
                         kubectl create namespace ${BRANCH_DEV}; \
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
