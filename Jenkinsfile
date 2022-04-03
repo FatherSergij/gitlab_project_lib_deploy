@@ -4,7 +4,9 @@ pipeline {
         IP_K8S="16.170.42.2"
         AWS_ACCOUNT_ID="728490037630"
         AWS_REGION="eu-north-1"
-        BRANCH2="develop" 
+        BRANCH="${params.Branch}"
+        TAG="${params.ImageTag}"        
+        //BRANCH2="develop" 
     }    
     
     //parameters {
@@ -25,20 +27,19 @@ pipeline {
 
         stage('Deploy on k8s from nginx-phpfpm') {
             environment {
-                BRANCH="${params.Branch}"
-                TAG="${params.ImageTag}"
+
             }            
                 steps {
           //sh "scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                     script {
-                        echo "${params.Branch_dev}"
+                        echo "${BRANCH}"
                         if (params.Branch_dev == 'develop') {
                             BRANCH="${params.Branch_dev}"
                             TAG="${params.ImageTag_dev}"
                             echo "${BRANCH}"
                         }                         
                         echo "${BRANCH}"
-                        sh 'ssh ubuntu@${IP_K8S} export BRANCH="""${BRANCH}"""'
+                       // sh 'ssh ubuntu@${IP_K8S} export BRANCH="""${BRANCH}"""'
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         echo ${BRANCH}; \
