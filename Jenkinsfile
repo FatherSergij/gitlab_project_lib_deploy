@@ -31,16 +31,16 @@ pipeline {
                     script {
                         echo "${BRANCH}"
                         if (params.Branch_dev == 'develop') {
-                            BRANCH="${params.Branch_dev}"
+                            BRANCH1="${params.Branch_dev}"
                             TAG="${params.ImageTag_dev}"
-                            echo "${BRANCH}"
+                            echo "${BRANCH1}"
                         }                         
                         echo "${BRANCH}"
                        // sh 'ssh ubuntu@${IP_K8S} export BRANCH="""${BRANCH}"""'
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
                         echo ${BRANCH}; \
-                        kubectl create namespace ${BRANCH2}; \
+                        kubectl create namespace ${BRANCH1}; \
                         export BRANCH1=${BRANCH}; \
                         export TAG1=${TAG}; \
                         kubectl apply -f issuer.yaml; \
