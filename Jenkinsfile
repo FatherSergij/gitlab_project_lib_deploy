@@ -49,7 +49,7 @@ pipeline {
                                 --docker-password=$(aws ecr get-login-password --region ${AWS_REGION}) \
                                 --namespace=develop; \
                         envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
-                        kubectl delete deploy deploy-nginx-phpfpm -n develop; \
+                        kubectl delete deploy deploy-nginx-phpfpm -n $BRANCH; \
                         envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""'                                
                     }
                 }                                                    
