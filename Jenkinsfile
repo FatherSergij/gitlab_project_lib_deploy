@@ -37,6 +37,9 @@ pipeline {
                     echo "${params.Branch_dev}"
                     echo "${params.ImageTag_dev}"
                     echo "${params.Service_dev}"
+                    echo "${BRANCH_DEV}"
+                    echo "${TAG_DEV}"
+                    echo "${SERVICE_DEV}"
                     if (params.Branch_dev == 'develop') {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
