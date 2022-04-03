@@ -39,7 +39,7 @@ pipeline {
                         export TAG=${TAG_DEV}; \
                         echo $params.Branch_dev; \
                         echo ${params.Branch_dev}; \
-                        kubectl create namespace $BRANCH; \
+                        kubectl create namespace ${params.Branch_dev}; \
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
                         kubectl delete -n ${BRANCH} secret regcred --ignore-not-found; \
