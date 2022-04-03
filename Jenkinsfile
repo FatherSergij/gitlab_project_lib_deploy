@@ -34,17 +34,16 @@ pipeline {
                             def newBranch="${params.Branch_dev}"
                             withEnv(['BRANCH1=' + newBranch]) {
                                 sh "echo $BRANCH1"
-                                sh 'ssh ubuntu@${IP_K8S} export BRANCH1=$BRANCH1}'
+                                sh 'ssh ubuntu@${IP_K8S} export BRANCH2=$BRANCH1}'
                             }
                             TAG="${params.ImageTag_dev}"
                             echo "$BRANCH1"
                         }                         
                         echo "${BRANCH}"
-                       // sh 'ssh ubuntu@${IP_K8S} export BRANCH="""${BRANCH}"""'
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
-                        echo $BRANCH1; \
-                        kubectl create namespace $BRANCH1; \
+                        echo $BRANCH2; \
+                        kubectl create namespace $BRANCH2; \
                         export BRANCH2=${BRANCH}; \
                         export TAG1=${TAG}; \
                         kubectl apply -f issuer.yaml; \
