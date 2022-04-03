@@ -37,8 +37,6 @@ pipeline {
                         """cd repos/project_lib_deploy; \
                         export BRANCH=${BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
-                        echo $params.Branch_dev; \
-                        echo ${params.Branch_dev}; \
                         kubectl create namespace develop; \
                         kubectl apply -f issuer.yaml; \
                         envsubst < ingress.yaml | kubectl apply -f -; \
@@ -49,7 +47,7 @@ pipeline {
                                 --docker-password=$(aws ecr get-login-password --region ${AWS_REGION}) \
                                 --namespace=develop; \
                         envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
-                        kubectl delete deploy deploy-nginx-phpfpm -n $BRANCH; \
+                        kubectl delete deploy deploy-nginx-phpfpm -n develop; \
                         envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""'                                
                     }
                 }                                                    
