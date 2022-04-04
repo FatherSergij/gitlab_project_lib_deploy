@@ -44,9 +44,9 @@ pipeline {
                                 --docker-username=AWS \
                                 --docker-password=$(aws ecr get-login-password --region ${AWS_REGION}) \
                                 --namespace=${BRANCH_DEV}; \
-                        envsubst < service-${SERVICE_DEV}-phpfpm.yaml | kubectl apply -f -; \
-                        kubectl delete deploy deploy-${SERVICE_DEV}-phpfpm -n ${BRANCH_DEV}; \
-                        envsubst < deploy-${SERVICE_DEV}-phpfpm.yaml | kubectl apply -f -;"""'
+                        envsubst < service-${SERVICE_DEV}.yaml | kubectl apply -f -; \
+                        kubectl delete deploy deploy-${SERVICE_DEV} -n ${BRANCH_DEV}; \
+                        envsubst < deploy-${SERVICE_DEV}.yaml | kubectl apply -f -;"""'
                     } else {
                         sh 'ssh ubuntu@${IP_K8S} \
                         """cd repos/project_lib_deploy; \
