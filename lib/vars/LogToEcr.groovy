@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-import com.Constants
+import Constants
 
 def log() {
     this.script.sh("aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS \
