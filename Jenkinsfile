@@ -13,7 +13,7 @@ pipeline {
     }    
     
     libraries {
-         lib('pipeline-library-demo')
+         lib('lib-for-project')
     }    
     
     stages {       
