@@ -42,6 +42,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-           name: sv-nginx
+           name: sv-node
            port:
               number: 80              
