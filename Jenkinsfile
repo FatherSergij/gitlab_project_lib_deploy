@@ -62,9 +62,9 @@ pipeline {
                                 --docker-username=AWS \
                                 --docker-password=$(aws ecr get-login-password --region ${AWS_REGION}) \
                                 --namespace=${BRANCH}; \
-                        envsubst < service-nginx-phpfpm.yaml | kubectl apply -f -; \
-                        kubectl delete deploy deploy-nginx-phpfpm -n ${BRANCH}; \
-                        envsubst < deploy-nginx-phpfpm.yaml | kubectl apply -f -;"""' 
+                        envsubst < service-${SERVICE}.yaml | kubectl apply -f -; \
+                        kubectl delete deploy deploy-${SERVICE} -n ${BRANCH}; \
+                        envsubst < deploy-${SERVICE}.yaml | kubectl apply -f -;"""' 
                     }
                 }                                                    
             }
