@@ -12,13 +12,17 @@ pipeline {
         SERVICE_DEV="${params.ServiceRun_dev}"        
     }    
     
+    libraries {
+         lib('pipeline-library-demo')
+    }    
     
     stages {       
 
         stage('Logging into AWS ECR') {
             steps {
                 script {
-                    sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+                    LogToEcr.log
+                //    sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                 }
             }
         }
@@ -31,7 +35,7 @@ pipeline {
                 script {
                     if ("${BRANCH_DEV}" == 'develop') {
                         sh 'ssh ubuntu@${IP_K8S} \
-                        """cd repos/project_lib_deploy; \
+                        """cd repos/project_lib_deploy/yaml; \
                         export BRANCH=${BRANCH_DEV}; \
                         export TAG=${TAG_DEV}; \
                         export SERVICE=${SERVICE_DEV}; \
