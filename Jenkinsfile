@@ -53,7 +53,7 @@ pipeline {
                         envsubst < deploy-${SERVICE_DEV}.yaml | kubectl apply -f -;"""'
                     } else {
                         sh 'ssh ubuntu@${IP_K8S} \
-                        """cd repos/project_lib_deploy; \
+                        """cd repos/project_lib_deploy/yaml; \
                         export BRANCH=${BRANCH}; \
                         export TAG=${TAG}; \
                         export SERVICE=${SERVICE}; \
