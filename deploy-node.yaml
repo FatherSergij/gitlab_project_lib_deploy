@@ -2,10 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-node
+  namespace: ${BRANCH}  
 spec:
   selector:
     matchLabels:
       app: node
+  template:  
     metadata:
       labels:
         app: node
