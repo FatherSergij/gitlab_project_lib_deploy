@@ -21,7 +21,7 @@ def call(String branch, String tag, String service) {
       kubectl delete deploy deploy-${service} -n ${branch}; \
       envsubst < deploy-${service}.yaml | kubectl apply -f -;"""')
   } else {
-      this.script.sh('ssh ubuntu@${IP_K8S} \
+      'ssh ubuntu@${IP_K8S} \
       """cd repos/project_lib_deploy/yaml; \
       export BRANCH=${branch}; \
       export TAG=${tag}; \
@@ -37,6 +37,6 @@ def call(String branch, String tag, String service) {
               --namespace=${branch}; \
       envsubst < service-${service}.yaml | kubectl apply -f -; \
       kubectl delete deploy deploy-${service} -n ${branch}; \
-      envsubst < deploy-${service}.yaml | kubectl apply -f -;"""')
-  }
+      envsubst < deploy-${service}.yaml | kubectl apply -f -;"""'
+    }
 }
