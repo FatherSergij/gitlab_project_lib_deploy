@@ -39,5 +39,5 @@ def call() {//(String branch, String tag, String service) {
       envsubst < service-${service}.yaml | kubectl apply -f -; \
       kubectl delete deploy deploy-${service} -n ${branch}; \
       envsubst < deploy-${service}.yaml | kubectl apply -f -;"""')
-   }
+   //}
 }
