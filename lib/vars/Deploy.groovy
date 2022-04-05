@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 import Constants
 
-def call(String branch, String tag, String service) {
+def call() {//(String branch, String tag, String service) {
   // if ("${BRANCH_DEV}" == 'develop') {
   //     this.script.sh('ssh ubuntu@${IP_K8S} \
   //     """cd repos/project_lib_deploy/yaml; \
