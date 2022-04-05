@@ -54,7 +54,7 @@ pipeline {
                     //     kubectl delete deploy deploy-${SERVICE_DEV} -n ${BRANCH_DEV}; \
                     //     envsubst < deploy-${SERVICE_DEV}.yaml | kubectl apply -f -;"""'
                     } else {
-                    //    Deploy// "${BRANCH}", "${TAG}", "${SERVICE}"
+                        Deploy ("${BRANCH}", "${TAG}", "${SERVICE}")
                     //     sh 'ssh ubuntu@${IP_K8S} \
                     //     """cd repos/project_lib_deploy/yaml; \
                     //     export BRANCH=${BRANCH}; \
