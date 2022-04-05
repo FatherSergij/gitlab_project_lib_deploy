@@ -1,3 +1,4 @@
+@Library('lib-for-project') _
 pipeline {
     agent any
     environment {
@@ -12,9 +13,9 @@ pipeline {
         SERVICE_DEV="${params.ServiceRun_dev}"        
     }    
     
-    libraries {
-         lib('lib-for-project')
-    }    
+    // libraries {
+    //      lib('lib-for-project')
+    // }    
     
     stages {       
 
