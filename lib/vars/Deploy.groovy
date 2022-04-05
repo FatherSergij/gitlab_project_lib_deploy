@@ -28,7 +28,6 @@ def call(String branch_dep, String tag_dep, String service_dep) {
         export BRANCH=${branch_dep}; \
         export TAG=${tag_dep}; \
         export SERVICE=${service_dep}; \
-        export PASS=`aws ecr get-login-password --region ${Constants.AWS_REGION}`; \
         kubectl create namespace ${branch_dep}; \
         kubectl apply -f issuer.yaml; \
         envsubst < ingress.yaml | kubectl apply -f -; \
