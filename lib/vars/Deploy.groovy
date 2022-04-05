@@ -21,8 +21,8 @@ def call(String branch_dep, String tag_dep, String service_dep) {
   //     kubectl delete deploy deploy-${service} -n ${branch}; \
   //     envsubst < deploy-${service}.yaml | kubectl apply -f -;"""')
   // } else {
-      //PASS=sh("aws ecr get-login-password --region ${Constants.AWS_REGION}"); \
-      sh("PASS=`aws ecr get-login-password --region ${Constants.AWS_REGION}`; ssh ubuntu@${Constants.IP_K8S} \
+      PASS=sh("aws ecr get-login-password --region ${Constants.AWS_REGION}")
+      sh("ssh ubuntu@${Constants.IP_K8S} \
         'cd repos/project_lib_deploy/yaml; \
         export BRANCH=${branch_dep}; \
         export TAG=${tag_dep}; \
