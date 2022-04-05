@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 import com.Constants
 
-def call(String branch, String tag, String service) {
+def call(String branch_dep, String tag_dep, String service_dep) {
   // if ("${BRANCH_DEV}" == 'develop') {
   //     this.script.sh('ssh ubuntu@${IP_K8S} \
   //     """cd repos/project_lib_deploy/yaml; \
@@ -21,13 +21,12 @@ def call(String branch, String tag, String service) {
   //     kubectl delete deploy deploy-${service} -n ${branch}; \
   //     envsubst < deploy-${service}.yaml | kubectl apply -f -;"""')
   // } else {
-      echo "${branch}"
       sh('ssh ubuntu@${IP_K8S} \
       """cd repos/project_lib_deploy/yaml; \
-      export BRANCH=${branch}; \
-      export TAG=${tag}; \
-      export SERVICE=${service}; \
-      kubectl create namespace ${branch}; \
+      export BRANCH=${branch_dep}; \
+      export TAG=${tag_dep}; \
+      export SERVICE=${service_dep}; \
+      kubectl create namespace ${branch_dep}; \
       kubectl apply -f issuer.yaml; \
       envsubst < ingress.yaml | kubectl apply -f -; \
       kubectl delete -n ${branch} secret regcred --ignore-not-found; \
