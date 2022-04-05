@@ -3,8 +3,8 @@ pipeline {
     agent any
     environment {
         // IP_K8S="16.170.42.2"
-         AWS_ACCOUNT_ID="728490037630"
-         AWS_REGION="eu-north-1"
+        // AWS_ACCOUNT_ID="728490037630"
+        // AWS_REGION="eu-north-1"
         BRANCH="${params.BranchRun}"
         TAG="${params.ImageTag}" 
         SERVICE="${params.ServiceRun}"       
