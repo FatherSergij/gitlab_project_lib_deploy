@@ -21,7 +21,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
   //     kubectl delete deploy deploy-${service} -n ${branch}; \
   //     envsubst < deploy-${service}.yaml | kubectl apply -f -;"""')
   // } else {
-      def ant = new AntBuilder(host: ${IP_K8S}, user: ubuntu, command: 
+      def ant = new AntBuilder(host: "${IP_K8S}", user: "ubuntu", command: 
       //sh('ssh ubuntu@${IP_K8S} \
       'cd repos/project_lib_deploy/yaml; \
       export BRANCH="""${branch_dep}"""; \
