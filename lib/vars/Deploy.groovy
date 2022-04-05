@@ -24,7 +24,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
       //PASS=sh("aws ecr get-login-password --region ${Constants.AWS_REGION}")
       //echo "${PASS}"
       String PASS=""
-      PASS=`aws ecr get-login-password --region ${Constants.AWS_REGION}`
+      PASS=sh("aws ecr get-login-password --region ${Constants.AWS_REGION}")
       echo "${PASS}"
       sh("ssh ubuntu@${Constants.IP_K8S} \
         'cd repos/project_lib_deploy/yaml; \
