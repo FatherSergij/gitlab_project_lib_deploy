@@ -24,7 +24,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
       sh('ssh ubuntu@${IP_K8S} \
       """cd repos/project_lib_deploy/yaml; \
       export BRANCH="${branch_dep}"; \
-      export TAG='${tag_dep}'; \
+      export TAG='"${tag_dep}"'; \
       export SERVICE=${service_dep}; \
       kubectl create namespace ${branch_dep}; \
       kubectl apply -f issuer.yaml; \
