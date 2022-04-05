@@ -1,6 +1,5 @@
 #!/usr/bin/env groovy
 import com.Constants
-import java.net.URL
 
 def call(String branch_dep, String tag_dep, String service_dep) {
   // if ("${BRANCH_DEV}" == 'develop') {
@@ -22,11 +21,10 @@ def call(String branch_dep, String tag_dep, String service_dep) {
   //     kubectl delete deploy deploy-${service} -n ${branch}; \
   //     envsubst < deploy-${service}.yaml | kubectl apply -f -;"""')
   // } else {
-      test_output = sh (script: 'java -jar Final_test.jar ', , returnStdout:true).trim()
       sh('ssh ubuntu@${IP_K8S} \
       """cd repos/project_lib_deploy/yaml; \
-      export BRANCH=${test_output}; \
-      export TAG=${tag_dep}; \
+      export BRANCH="${branch_dep}"; \
+      export TAG='${tag_dep}'; \
       export SERVICE=${service_dep}; \
       kubectl create namespace ${branch_dep}; \
       kubectl apply -f issuer.yaml; \
