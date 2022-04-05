@@ -21,7 +21,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
   //     kubectl delete deploy deploy-${service} -n ${branch}; \
   //     envsubst < deploy-${service}.yaml | kubectl apply -f -;"""')
   // } else {
-      //def pass=$(aws ecr get-login-password --region ${Constants.AWS_REGION})
+      def pass=$(aws ecr get-login-password --region ${Constants.AWS_REGION})
       sh("ssh ubuntu@${Constants.IP_K8S} \
         'cd repos/project_lib_deploy/yaml; \
         export BRANCH=${branch_dep}; \
@@ -31,7 +31,6 @@ def call(String branch_dep, String tag_dep, String service_dep) {
         kubectl apply -f issuer.yaml; \
         envsubst < ingress.yaml | kubectl apply -f -; \
         kubectl delete -n ${branch} secret regcred --ignore-not-found; \
-        pass=$(aws ecr get-login-password --region ${Constants.AWS_REGION}); \
         kubectl create secret docker-registry regcred \
                 --docker-server=${Constants.AWS_ACCOUNT_ID}.dkr.ecr.${Constants.AWS_REGION}.amazonaws.com \
                 --docker-username=AWS \
