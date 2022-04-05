@@ -33,8 +33,8 @@ pipeline {
             steps {
           //sh scp -o StrictHostKeyChecking=no -r repos/project_lib_deploy/ ubuntu@${IP_K8S}:~/"
                 script {
-                    Deploy "${BRANCH_DEV}", "${TAG_DEV}", "${SERVICE_DEV}"
                     if ("${BRANCH_DEV}" == 'develop') {
+                        Deploy "${BRANCH_DEV}", "${TAG_DEV}", "${SERVICE_DEV}"
                     //     sh 'ssh ubuntu@${IP_K8S} \
                     //     """cd repos/project_lib_deploy/yaml; \
                     //     export BRANCH=${BRANCH_DEV}; \
