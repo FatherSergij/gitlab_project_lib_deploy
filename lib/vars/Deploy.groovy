@@ -25,7 +25,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
       //echo "${PASS}"
       String PASS=""
       script {
-       PASS=`aws ecr get-login-password --region ${Constants.AWS_REGION}`
+       PASS=$(aws ecr get-login-password --region ${Constants.AWS_REGION})
       }
       echo "${PASS}"
       sh("ssh ubuntu@${Constants.IP_K8S} \
