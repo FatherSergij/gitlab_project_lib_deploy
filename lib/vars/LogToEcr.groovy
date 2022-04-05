@@ -1,4 +1,3 @@
-#!/usr/bin/env groovy
 import com.Constants
 
 def call() {
