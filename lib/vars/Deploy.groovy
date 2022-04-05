@@ -29,7 +29,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
       kubectl create namespace \"${branch_dep}\"; \
       kubectl apply -f issuer.yaml; \
       envsubst < ingress.yaml | kubectl apply -f -; \
-      kubectl delete -n \"${branch} secret regcred --ignore-not-found; \
+      kubectl delete -n \"${branch}\" secret regcred --ignore-not-found; \
       kubectl create secret docker-registry regcred \
               --docker-server=\"${Constants.AWS_ACCOUNT_ID}\".dkr.ecr.\"${Constants.AWS_REGION}\".amazonaws.com \
               --docker-username=AWS \
