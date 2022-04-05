@@ -22,7 +22,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
   //     envsubst < deploy-${service}.yaml | kubectl apply -f -;"""')
   // } else {
       //PASS=sh("aws ecr get-login-password --region ${Constants.AWS_REGION}")
-      echo "${PASS}"
+      //echo "${PASS}"
       sh("ssh ubuntu@${Constants.IP_K8S} \
         'cd repos/project_lib_deploy/yaml; \
         export BRANCH=${branch_dep}; \
