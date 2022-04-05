@@ -12,7 +12,7 @@ pipeline {
         SERVICE_DEV="${params.ServiceRun_dev}"        
     }    
     
-    libraries {
+    libraries { {
          lib('lib-for-project')
     }    
     
@@ -75,5 +75,5 @@ pipeline {
                 }                                                       
             }
         } 
-    }
+    } }
 }
