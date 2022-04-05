@@ -23,7 +23,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
   // } else {
       //PASS=sh("aws ecr get-login-password --region ${Constants.AWS_REGION}")
       //echo "${PASS}"
-      String PASS=""
+      //String PASS=""
       PASS=sh(script: "aws ecr get-login-password --region ${Constants.AWS_REGION}",
         returnStdout: true)
       echo "${PASS}"
