@@ -24,7 +24,7 @@ pipeline {
         }
 
 
-        stage('Deploy on k8s from nginx-phpfpm') {
+        stage('Deploy on k8s') {
 
             steps {
                 script {
