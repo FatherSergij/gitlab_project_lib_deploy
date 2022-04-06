@@ -32,7 +32,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: sv-nginx-phpfpm
+            name: sv-nginx
             port:
               number: 80
   - host: ${BRANCH}-node.fatherfedor.fun
