@@ -1,0 +1,34 @@
+image:
+  repository: 728490037630.dkr.ecr.eu-north-1.amazonaws.com/bigproject_
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx 
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "issuer-letsencrypt"
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+  tls:
+    hosts:
+      ${BRANCH}-nginx.fatherfedor.fun
+      ${BRANCH}-node.fatherfedor.fun
+    secretName: ssl-letsencrypt
+  rules:
+    host: ${BRANCH}-nginx.fatherfedor.fun
+    http:
+      paths:
+        path: /
+        pathType: Prefix
+    host: ${BRANCH}-node.fatherfedor.fun
+    http:
+      paths:
+        path: /
+        pathType: Prefix
+
