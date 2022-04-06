@@ -25,8 +25,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
       //echo "${PASS}"
       //String PASS=""
       PASS=sh(script: "aws ecr get-login-password --region ${Constants.AWS_REGION}",
-        returnStdout: true)
-      echo "${PASS}"
+        returnStdout: true).trim()
       sh("ssh ubuntu@${Constants.IP_K8S} \
         'cd repos/project_lib_deploy/yaml; \
         kubectl delete -n ${branch} secret regcred --ignore-not-found; \
