@@ -38,8 +38,8 @@ def call(String branch_dep, String tag_dep, String service_dep) {
         envsubst < ingress.yaml | kubectl apply -f -; \
         kubectl create secret docker-registry regcred -n ${branch} \
                 --docker-username=AWS \
-                --docker-password=${PASS} \
                 --docker-server=${Constants.AWS_ACCOUNT_ID}.dkr.ecr.${Constants.AWS_REGION}.amazonaws.com \
+                --docker-password=${PASS} \
                 --namespace=${branch}; \
         envsubst < service-${service}.yaml | kubectl apply -f -; \
         kubectl delete deploy deploy-${service} -n ${branch}; \
