@@ -36,7 +36,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
         kubectl create namespace ${branch_dep}; \
         kubectl apply -f issuer.yaml; \
         envsubst < ingress.yaml | kubectl apply -f -; \
-        kubectl create secret docker-registry regcred -n ${branch}\
+        kubectl create secret docker-registry regcred -n ${branch} \
                 --docker-server=${Constants.AWS_ACCOUNT_ID}.dkr.ecr.${Constants.AWS_REGION}.amazonaws.com \
                 --docker-username=AWS \
                 --docker-password=${PASS}; \
