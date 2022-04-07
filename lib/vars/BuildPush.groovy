@@ -4,7 +4,9 @@ import com.Constants
 def call(String branch, String tag, String service, String build_num) {
     def REPOSITORY_URI="${Constants.AWS_ACCOUNT_ID}.dkr.ecr.${Constants.AWS_REGION}.amazonaws.com/\
         ${Constants.IMAGE_REPO_NAME}_${service}_${branch}"
+    echo "${REPOSITORY_URI}"
     def REPO_NAME="${Constants.IMAGE_REPO_NAME}_${service}_${branch}"
+    echo "${REPO_NAME}"
     MANIFEST=sh(script: "aws ecr batch-get-image --repository-name ${REPO_NAME} --image-ids imageTag=latest --region \
         ${Constants.AWS_REGION} --query 'images[].imageManifest' --output text", returnStdout: true).trim()
     echo "${MANIFEST}"
