@@ -25,8 +25,13 @@ def call(String branch, String tag, String service, String build_num) {
     // if ("${TR}" != "null" & TR != null & "${TR}" != "")
    // try {
     echo MANIFEST_TMP
+    def TT="0"
+    TT=MANIFEST_TMP
+    echo TT
+    echo $TT
+    echo "${TT}"
     MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
-    if (MANIFEST.isNull() == false ) {
+    if (binding.hasVariable("${MANIFEST_TMP}")) {
         sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
             ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
         sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} \
