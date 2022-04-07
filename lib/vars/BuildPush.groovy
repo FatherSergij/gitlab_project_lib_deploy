@@ -18,7 +18,7 @@ def call(String branch, String tag, String service, String build_num) {
     //         --image-ids imageTag=latest")        
     // }
     MANIFEST_TMP=sh(script: "aws ecr batch-get-image --repository-name ${REPO_NAME} --image-ids imageTag=latest \
-        --region ${Constants.AWS_REGION} --query 'images[0].imageManifest' --output json; echo $?",returnStdout: true)
+        --region ${Constants.AWS_REGION} --query 'images[0].imageManifest' --output json",returnStdout: true)
     // def TR=echo MANIFEST_TMP
     // echo TR
     // echo "${TR}"
