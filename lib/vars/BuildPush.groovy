@@ -24,6 +24,10 @@ def call(String branch, String tag, String service, String build_num) {
     // echo "${TR}"
     // if ("${TR}" != "null" & TR != null & "${TR}" != "")
    // try {
+    TMP=sh(script: "aws ecr list-images --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} --image-ids imageTag=latest")
+    echo TMP
+    echo TMP.mediaType
+    echo "${TMP.mediaType}"
     MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
     if (MANIFEST) {
         sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
