@@ -26,9 +26,10 @@ def call(String branch, String tag, String service, String build_num) {
    // try {
     echo MANIFEST_TMP
     def TT="0"
+    echo TT
+    echo "${TT}"    
     TT=MANIFEST_TMP
     echo TT
-    echo $TT
     echo "${TT}"
     MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
     if (binding.hasVariable("${MANIFEST_TMP}")) {
