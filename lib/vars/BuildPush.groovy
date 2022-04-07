@@ -27,7 +27,7 @@ def call(String branch, String tag, String service, String build_num) {
     echo MANIFEST_TMP
     MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
     sh(script: "if [ -z $MANIFEST ] then exit 0; else exit 1; fi")
-    echo $?
+    echo "$?"
     if ("${MANIFEST}" != "" &  "${MANIFEST}" != null & "${MANIFEST}" != "null" & "${MANIFEST}" != '') {
         sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
             ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
