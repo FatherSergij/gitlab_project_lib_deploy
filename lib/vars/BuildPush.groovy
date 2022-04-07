@@ -19,17 +19,16 @@ def call(String branch, String tag, String service, String build_num) {
     // }
     MANIFEST_TMP=sh(script: "aws ecr batch-get-image --repository-name ${REPO_NAME} --image-ids imageTag=latest \
         --region ${Constants.AWS_REGION} --query 'images[0].imageManifest' --output json",returnStdout: true)
-    def TR=echo MANIFEST_TMP
-    echo TR
-    echo "${TR}"
-    if ("${TR}" != "null" & TR != null & "${TR}" != "")
+    // def TR=echo MANIFEST_TMP
+    // echo TR
+    // echo "${TR}"
+    // if ("${TR}" != "null" & TR != null & "${TR}" != "")
    // try {
-        def MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
-        echo MANIFEST
-        sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
-            ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
-        sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} \
-            --image-ids imageTag=latest")
+    MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
+    sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
+        ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
+    sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} \
+        --image-ids imageTag=latest")
     // } finally {
     sh "docker build src/ -t ${REPOSITORY_URI}:${tag}"
     sh "docker push ${REPOSITORY_URI}:${tag}"
