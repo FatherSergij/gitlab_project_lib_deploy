@@ -25,10 +25,12 @@ def call(String branch, String tag, String service, String build_num) {
     // if ("${TR}" != "null" & TR != null & "${TR}" != "")
    // try {
     MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
-    sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
-        ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
-    sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} \
-        --image-ids imageTag=latest")
+    if (MANIFEST) {
+        sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
+            ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
+        sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} \
+            --image-ids imageTag=latest")
+    }
     // } finally {
     sh "docker build src/ -t ${REPOSITORY_URI}:${tag}"
     sh "docker push ${REPOSITORY_URI}:${tag}"
