@@ -14,6 +14,6 @@ def call(String branch, String tag, String service, String build_num) {
             ${MANIFEST} --region ${Constants.AWS_REGION}")
         sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --image-ids imageTag=latest")
     }
-    sh "docker build src/ -t ${REPOSITORY_URI}:latest"
-    sh "docker push ${REPOSITORY_URI}:latest"
+    sh "docker build src/ -t ${REPOSITORY_URI}:${tag}"
+    sh "docker push ${REPOSITORY_URI}:${tag}"
 }
