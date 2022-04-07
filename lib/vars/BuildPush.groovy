@@ -19,8 +19,9 @@ def call(String branch, String tag, String service, String build_num) {
     // }
     MANIFEST_TMP=sh(script: "aws ecr batch-get-image --repository-name ${REPO_NAME} --image-ids imageTag=latest \
         --region ${Constants.AWS_REGION} --query 'images[0].imageManifest' --output json",returnStdout: true)
-    TR=echo MANIFEST_TMP
+    def TR=echo MANIFEST_TMP
     echo TR
+    echo "${TR}"
     if ("${TR}" !="null" & TR !=null )
    // try {
         MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
