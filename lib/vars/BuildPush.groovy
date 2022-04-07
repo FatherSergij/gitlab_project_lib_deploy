@@ -22,9 +22,9 @@ def call(String branch, String tag, String service, String build_num) {
     def TR=echo MANIFEST_TMP
     echo TR
     echo "${TR}"
-    if ("${TR}" !="null" & TR !=null )
+    if ("${TR}" != "null" & TR != null & "${TR}" != "")
    // try {
-        MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
+        def MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
         echo MANIFEST
         sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
             ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
