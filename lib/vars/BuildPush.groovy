@@ -7,7 +7,7 @@ def call(String branch, String tag, String service, String build_num) {
     MANIFEST_TMP=sh(script: "aws ecr batch-get-image --repository-name ${REPO_NAME} --image-ids imageTag=latest \
         --region ${Constants.AWS_REGION} --query 'images[].imageManifest' --output text")
     echo MANIFEST_TMP
-    if (MANIFEST_TMP != null) {
+    if (MANIFEST_TMP == null) {
         echo "not null"
     }
     // MANIFEST_TMP=sh(script: "aws ecr batch-get-image --repository-name ${REPO_NAME} --image-ids imageTag=latest \
@@ -19,7 +19,7 @@ def call(String branch, String tag, String service, String build_num) {
     //     sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} \
     //         --image-ids imageTag=latest")
     // } finally {
-    //     sh "docker build src/ -t ${REPOSITORY_URI}:${tag}"
-    //     sh "docker push ${REPOSITORY_URI}:${tag}"
+    sh "docker build src/ -t ${REPOSITORY_URI}:${tag}"
+    sh "docker push ${REPOSITORY_URI}:${tag}"
     // }
 }
