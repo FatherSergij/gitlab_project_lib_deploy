@@ -25,12 +25,6 @@ def call(String branch, String tag, String service, String build_num) {
     // if ("${TR}" != "null" & TR != null & "${TR}" != "")
    // try {
     echo MANIFEST_TMP
-    def TT="0"
-    echo TT
-    echo "${TT}"    
-    TT=MANIFEST_TMP
-    echo TT
-    echo "${TT}"
     MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
     if (binding.hasVariable("${MANIFEST_TMP}")) {
         sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
