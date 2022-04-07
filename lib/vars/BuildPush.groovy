@@ -6,7 +6,7 @@ def call(String branch, String tag, String service, String build_num) {
     def REPO_NAME="${Constants.IMAGE_REPO_NAME}_${service}_${branch}"
     MANIFEST_TMP=sh(script: "aws ecr batch-get-image --repository-name ${REPO_NAME} --image-ids imageTag=latest \
         --region ${Constants.AWS_REGION} --query 'images[0].imageManifest' --output json",returnStdout: true)
-    if ($? == 0) {
+    if (MANIFEST_TMP == 0) {
     MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
 //    if ("${MANIFEST}" != "null") {
         sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
