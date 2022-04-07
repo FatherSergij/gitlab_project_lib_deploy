@@ -5,7 +5,7 @@ def call(String branch, String tag, String service, String build_num) {
     def REPOSITORY_URI="${Constants.AWS_ACCOUNT_ID}.dkr.ecr.${Constants.AWS_REGION}.amazonaws.com/${Constants.IMAGE_REPO_NAME}_${service}_${branch}"
     def REPO_NAME="${Constants.IMAGE_REPO_NAME}_${service}_${branch}"
     MANIFEST_TMP=sh(script: "aws ecr batch-get-image --repository-name ${REPO_NAME} --image-ids imageTag=latest \
-        --region ${Constants.AWS_REGION} --query '.images[].imageManifest' --output text")
+        --region ${Constants.AWS_REGION} --query '.images[0].imageManifest' --output text")
     echo MANIFEST_TMP
     if (MANIFEST_TMP != null) {
         echo "not null"
