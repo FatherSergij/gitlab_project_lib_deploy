@@ -8,7 +8,11 @@ def call(String branch, String tag, String service, String build_num) {
         --region ${Constants.AWS_REGION} --query 'images[0].imageManifest' --output json",returnStdout: true)
     def MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
     //try {    
-    if ("${MANIFEST}" != "" || MANIFEST != null || "${MANIFEST}" != "null" || "${MANIFEST}" != '') {
+    //if ("${MANIFEST}" != "" || MANIFEST != null || "${MANIFEST}" != "null" || "${MANIFEST}" != '') {
+    if (MANIFEST returns null) 
+    {
+        echo "ff"
+    } else {
         sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
             ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
         sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} \
