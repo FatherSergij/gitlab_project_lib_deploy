@@ -25,14 +25,9 @@ def call(String branch, String tag, String service, String build_num) {
     // if ("${TR}" != "null" & TR != null & "${TR}" != "")
    // try {
     echo MANIFEST_TMP
-    MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
-    def tmp
-   // yy=sh(script: "if test -z ${MANIFEST}; then tmp=1; return 3; else tmp=2; return 4; fi")
-    yy=sh(script: "if test -z MANIFEST; then tmp=1; return 3; fi")
-    echo yy
-    echo "${tmp}"
-    //if (yy != null) {
-    if ("${MANIFEST}" != "" &  "${MANIFEST}" != null & "${MANIFEST}" != "null" & "${MANIFEST}" != '') {
+    def MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
+    echo MANIFEST
+    if ("${MANIFEST}" != "" &  MANIFEST != null & "${MANIFEST}" != "null" & "${MANIFEST}" != '') {
         sh(script: "aws ecr put-image --repository-name ${REPO_NAME} --image-tag ${build_num} --region \
             ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
         sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} \
