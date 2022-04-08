@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sv-nginx
-  namespace: ${BRANCH}
+  namespace: {{.Release.namespace}}
   labels:
     app: nginx-phpfpm
 spec:

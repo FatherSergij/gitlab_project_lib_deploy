@@ -17,18 +17,9 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
   tls:
     hosts:
-      ${BRANCH}-nginx.fatherfedor.fun
-      ${BRANCH}-node.fatherfedor.fun
+      - {{.Release.namespace}}-nginx.fatherfedor.fun
+      - {{.Release.namespace}}-node.fatherfedor.fun
     secretName: ssl-letsencrypt
   rules:
-    host: ${BRANCH}-nginx.fatherfedor.fun
-    http:
-      paths:
-        path: /
-        pathType: Prefix
-    host: ${BRANCH}-node.fatherfedor.fun
-    http:
-      paths:
-        path: /
-        pathType: Prefix
-
+    host1: {{.Release.namespace}}-nginx.fatherfedor.fun
+    host2: {{.Release.namespace}}-node.fatherfedor.fun

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-nginx
-  namespace: ${BRANCH}
+  namespace: {{.Release.namespace}}
 spec:
   selector:
     matchLabels:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nginx-phpfpm
-        image: {{ .Values.image.repository }}${SERVICE}_${BRANCH}:${TAG}
+        image: {{ .Values.image.repository }}nginx_{{.Release.namespace}}:latest
         imagePullPolicy: {{ .Values.image.pullPolicy }}
       imagePullSecrets:
       - name: regcred         

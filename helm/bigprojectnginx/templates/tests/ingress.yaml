@@ -2,34 +2,24 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ssl-dev
-  namespace: ${BRANCH}
+  namespace: {{.Release.namespace}}
   {{- with .Values.ingress.annotations }}  
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   {{- if .Values.ingress.tls }}
-  tls:
-    {{- range .Values.ingress.tls }}  
-  - hosts:
+    tls:
+    {{- range .Values.ingress.tls }}
+      - hosts:
         {{- range .hosts }}
-        - {{ . | quote }}
+          - {{ . | quote }}
         {{- end }}
-    secretName: {{ .secretName }}
+        secretName: {{ .secretName }}
     {{- end }}
-  {{- end }}   
+  {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
-      http:
-        paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            pathType: {{ .pathType }}
-          {{- end }}
-    {{- end }}
-  rules:
-  - host: ${BRANCH}-nginx.fatherfedor.fun
+  - host: {{ .Values.ingress.rules.host1 }}
     http:
       paths:
       - path: /
@@ -39,7 +29,7 @@ spec:
             name: sv-nginx
             port:
               number: 80
-  - host: ${BRANCH}-node.fatherfedor.fun
+  - host: {{ .Values.ingress.rules.host2 }}
     http:
       paths:
       - path: /
