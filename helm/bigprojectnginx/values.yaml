@@ -17,6 +17,6 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
   tls:
   - hosts:
-      - {{ .Release.namespace }}-nginx.fatherfedor.fun
-      - {{ .Release.namespace }}-node.fatherfedor.fun
+      - "-nginx.fatherfedor.fun"
+      - "-node.fatherfedor.fun"
     secretName: ssl-letsencrypt          

@@ -10,16 +10,13 @@ metadata:
 spec:
   {{- if .Values.ingress.tls }}
     tls:
-    {{- range .Values.ingress.tls }}
       - hosts:
-        {{- range .hosts }}
-          - {{ . | quote }}
-        {{- end }}
+          {{- range .hosts }}
+          {{.}}{{- end }}
         secretName: {{ .secretName }}
-    {{- end }}
   {{- end }}
   rules:
-  - host: {{ .Values.ingress.tls.hosts[0].host }}
+  - host: {{ .Release.namespace }}{{ index .Values.ingress.tls.hosts 0 }}
     http:
       paths:
       - path: /
@@ -29,7 +26,7 @@ spec:
             name: sv-nginx
             port:
               number: 80
-  - host: {{ .Values.ingress.tls.hosts[1].host }}
+  - host: {{ .Release.namespace }}{{ index .Values.ingress.tls.hosts 1 }}
     http:
       paths:
       - path: /
