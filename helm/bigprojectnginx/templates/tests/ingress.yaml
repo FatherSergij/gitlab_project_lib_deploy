@@ -19,7 +19,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-  - host: {{ .Values.ingress.rules.host1 }}
+  - host: {{ .Values.ingress.tls.hosts[0].host }}
     http:
       paths:
       - path: /
@@ -29,7 +29,7 @@ spec:
             name: sv-nginx
             port:
               number: 80
-  - host: {{ .Values.ingress.rules.host2 }}
+  - host: {{ .Values.ingress.tls.hosts[1].host }}
     http:
       paths:
       - path: /
