@@ -27,7 +27,7 @@ def call(String branch, String tag, String service, String build_num) {
     echo MANIFEST_TMP
     MANIFEST="${MANIFEST_TMP}".replace('\\n', '')
     def tmp
-    yy=sh(script: "if test -z $MANIFEST; then tmp=1; return 3 else tmp=2; return 4; fi")
+    yy=sh(script: "if test -z ${MANIFEST}; then tmp=1; return 3; else tmp=2; return 4; fi")
     echo yy
     echo "${tmp}"
     if ("${MANIFEST}" != "" &  "${MANIFEST}" != null & "${MANIFEST}" != "null" & "${MANIFEST}" != '') {
