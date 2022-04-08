@@ -17,7 +17,6 @@ def call(String branch, String tag, String service, String build_num) {
             ${Constants.AWS_REGION} --image-manifest ${MANIFEST}")
         sh(script: "aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${Constants.AWS_REGION} \
             --image-ids imageTag=latest")
-    } 
     } finally {
     sh "docker build src/ -t ${REPOSITORY_URI}:${tag}"
     sh "docker push ${REPOSITORY_URI}:${tag}"
