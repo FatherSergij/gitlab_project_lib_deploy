@@ -1,5 +1,0 @@
-kind: namespace
-apiVersion: v1
-metadata:
-  name: {{.Values.namespace}}
-  namespace: ""

@@ -10,11 +10,11 @@ image:
 
 resources:
   requests:
-    cpu: 50m
-    memory: 50Mi
-  limits:
     cpu: 100m
-    memory: 100Mi  
+    memory: 100Mi
+  limits:
+    cpu: 150m
+    memory: 150Mi  
 
 service:
   name1: nginx
