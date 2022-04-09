@@ -1,10 +1,27 @@
+namespace: &masterval master
+
+labels:
+  service1: nginx
+  service2: node
+
 image:
   repository: 728490037630.dkr.ecr.eu-north-1.amazonaws.com/bigproject_
   pullPolicy: Always
 
+resources:
+  requests:
+    cpu: 50m
+    memory: 50Mi
+  limits:
+    cpu: 100m
+    memory: 100Mi  
+
 service:
+  name1: nginx
+  name2: node
   type: ClusterIP
-  port: 80
+  port1: 80
+  port2: 8080
   targetPort: 80
 
 ingress:
@@ -17,6 +34,27 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
   tls:
   - hosts:
-      - "-nginx.fatherfedor.fun"
-      - "-node.fatherfedor.fun"
-    secretName: ssl-letsencrypt          
+      - "nginx.fatherfedor.fun"
+      - "node.fatherfedor.fun"
+    secretName: ssl-letsencrypt 
+  hosts: |
+    - host: "nginx.fatherfedor.fun"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: sv-{{ .Values.service.name1 }}
+              port:
+                number: 80 
+    - host: "node.fatherfedor.fun"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: sv-{{ .Values.service.name2 }}
+              port:
+                number: 80               

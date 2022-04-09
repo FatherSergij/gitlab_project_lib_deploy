@@ -16,5 +16,12 @@ spec:
       - name: node
         image: 728490037630.dkr.ecr.eu-north-1.amazonaws.com/bigproject_${SERVICE}_${BRANCH}:${TAG}
         imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi        
       imagePullSecrets:
       - name: regcred         
