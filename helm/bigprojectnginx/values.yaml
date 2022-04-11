@@ -1,11 +1,13 @@
 namespace: &masterval master
+namerepo: bigproject
+region: eu-north-1
 
 labels:
   service1: nginx
   service2: node
 
 image:
-  repository: 728490037630.dkr.ecr.eu-north-1.amazonaws.com/bigproject_
+  repository: 728490037630.dkr.ecr.eu-north-1.amazonaws.com
   pullPolicy: Always
 
 resources:
