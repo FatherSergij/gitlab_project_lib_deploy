@@ -1,9 +1,12 @@
 pipeline {
     agent any
     environment {
-        BRANCH="${params.BranchRun}"
-        TAG="${params.ImageTag}" 
-        SERVICE="${params.ServiceRun}"       
+        BRANCHNG="${params.BranchRunNginx}"
+        TAGNG="${params.ImageTagNginx}" 
+        SERVICENG="nginx"  
+        BRANCHND="${params.BranchRunNode}"
+        TAGND="${params.ImageTagNode}" 
+        SERVICEND="node"
         BRANCH_DEV="${params.BranchRun_dev}"
         TAG_DEV="${params.ImageTag_dev}" 
         SERVICE_DEV="${params.ServiceRun_dev}"        
@@ -31,7 +34,7 @@ pipeline {
                     if ("${BRANCH_DEV}" == 'develop') {
                         Deploy ("${BRANCH_DEV}", "${TAG_DEV}", "${SERVICE_DEV}")
                     } else {
-                        Deploy ("${BRANCH}", "${TAG}", "${SERVICE}")
+                        DeployHelm ("${BRANCHNG}", "${TAGNG}", "${SERVICENG}", "${BRANCHND}", "${TAGND}", "${SERVICEND}")
                     }                                             
                 }                                                       
             }
