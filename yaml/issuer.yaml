@@ -4,6 +4,7 @@ metadata:
   annotation:
   generation: 1
   name: issuer-letsencrypt
+  namespace: ${BRANCH}
 spec:
   acme:
     email: FatherFedor13@gmail.com

@@ -11,7 +11,7 @@ def call(String branch_dep, String tag_dep, String service_dep) {
     export TAG=${tag_dep}; \
     export SERVICE=${service_dep}; \
     kubectl create namespace ${branch_dep}; \
-    kubectl apply -f issuer.yaml; \
+    envsubst < issuer.yaml | kubectl apply -f -; \
     envsubst < ingress.yaml | kubectl apply -f -; \
     kubectl create secret docker-registry regcred -n ${branch_dep} \
             --docker-username=AWS \
