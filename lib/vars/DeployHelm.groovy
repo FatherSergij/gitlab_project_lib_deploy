@@ -3,7 +3,6 @@ import com.Constants
 
 def call(String branch_ng, String tag_ng, String branch_nd, String tag_nd) {
     //sh("scp -o StrictHostKeyChecking=no -r helm/ ubuntu@${Constants.IP_K8S}:~/")
-    //sh("git clone git@github.com:FatherSergij/project_helmchart.git/helm/ ubuntu@${Constants.IP_K8S}:~/")
     //withCredentials([file(credentialsId: 'deployhelm', variable: 'deployhelm')]) {
         sh("ssh ubuntu@${Constants.IP_K8S} 'git clone git@github.com:FatherSergij/project_helmchart.git helm; \
             cd helm; \
