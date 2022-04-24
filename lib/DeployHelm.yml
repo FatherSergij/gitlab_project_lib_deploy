@@ -1,0 +1,6 @@
+.deployhelm:
+  script:
+    - scp -o StrictHostKeyChecking=no -r helm/ ubuntu@${IP_K8S}:~/
+    - ssh ubuntu@${IP_K8S} "cd helm; 
+        sed -i.bak 's/%BRNG%/${BRANCHNG}/; s/%TAGNG%/${TAGNG}/; s/%BRND%/${BRANCHND}/; s/%TAGND%/${TAGND}/' values.yaml; 
+        helm upgrade --install -n my-project --kubeconfig kubernetes-deploy-helm-kube.conf test .;"  

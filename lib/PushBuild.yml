@@ -1,0 +1,19 @@
+.pushbuild:
+  script:
+    - REPO_NAME="${IMAGE_REPO_NAME}_${SERVICE}_$CI_COMMIT_BRANCH"
+    - MANIFEST=$(aws ecr batch-get-image --repository-name ${REPO_NAME} --image-ids imageTag=latest
+        --region ${AWS_REGION} --output json | jq --raw-output '.images[].imageManifest')
+      #length string MANIFEST
+    - if [[ ${#MANIFEST} -ne 0 ]]; then 
+        aws ecr put-image --repository-name ${REPO_NAME} --image-tag $CI_PIPELINE_IID --region 
+          ${AWS_REGION} --image-manifest "${MANIFEST}";
+        aws ecr batch-delete-image --repository-name ${REPO_NAME} --region ${AWS_REGION} 
+          --image-ids imageTag=latest;
+    - fi
+    - if [ $CI_COMMIT_BRANCH == "develop" ]; then
+        docker build src/ -t $REPOSITORY_URI:$TAG;
+        docker push $REPOSITORY_URI:$TAG;
+    - else
+        docker build src/ -t $REPOSITORY_URI:$CI_COMMIT_SHA;
+        docker push $REPOSITORY_URI:$CI_COMMIT_SHA;
+    - fi
