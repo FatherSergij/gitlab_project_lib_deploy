@@ -1,0 +1,4 @@
+.gettag:
+  script:
+    - TAGNG=$(br=$BRANCH yq -e '.[env(br)].service.nginx.version' commit.yml)
+    - TAGND=$(br=$BRANCH yq -e '.[env(br)].service.node.version' commit.yml)
